@@ -19,5 +19,3 @@ class SignRecogJoint(nn.Module):
         x = self.batch_norm3(self.relu(self.dense3(x)))
         return self.dense4(x)
 
-path_images = r'C:\Dev\Tools\Python\condabin\SiLT Project\rock-paper-scissors-master\datasets\final\data\images'
-path_labels = r'C:\Dev\Tools\Python\condabin\SiLT Project\rock-paper-scissors-master\datasets\final\data\labels'
