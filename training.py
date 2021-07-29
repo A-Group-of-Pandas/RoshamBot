@@ -10,17 +10,20 @@ writer = SummaryWriter()
 minLoss = 1e9
 
 def train(model, optimizer, batch_size, epochs):
+    model = model.float()
     counter = 0
     for epoch in range(epochs):
         loss = 0
         acc = 0
         train_gen = read_batch(batch_size,True)
+        print(list(train_gen))
         test_gen = read_batch(batch_size,False)
         # creates a generator for batch data and iterates through it below
         for batch_i,(train_x_batch, truth) in enumerate(train_gen):
+            print("epoch: " + str(epoch))
             train_x_batch = torch.flatten(torch.tensor(train_x_batch).to('cpu'),start_dim=1)
             truth = torch.tensor(truth).to('cpu')
-            preds = model(train_x_batch)
+            preds = model(train_x_batch.float())
             # (N, 26)
             loss = loss_fn(preds, truth)
             optimizer.zero_grad()
@@ -42,11 +45,13 @@ def train(model, optimizer, batch_size, epochs):
 def eval(model, test_gen, epoch):
     # evaluates the loss using test data
     global minLoss
+    model = model.float()
     loss, count, acc = 0,0,0
     for test_x_batch, truth in test_gen:
         test_x_batch = torch.flatten(torch.tensor(test_x_batch).to('cpu'), start_dim=1)
         truth = torch.tensor(truth).to('cpu')
-        preds = model(test_x_batch) 
+        preds = model(test_x_batch.float()) 
+
         loss += loss_fn(preds, truth)
         acc += torch.mean((torch.argmax(preds, dim=1) == truth).float())
         count += 1
@@ -62,7 +67,7 @@ def eval(model, test_gen, epoch):
         # saves the model params whenever the loss goes below minLoss
 
      
-epochs = 2
+epochs = 20
 batch_size = 64
 model = SignRecogJoint().to('cpu')
 optimizer = torch.optim.Adam(model.parameters(),lr=1e-4)

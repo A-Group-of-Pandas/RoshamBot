@@ -10,8 +10,8 @@ from hand_cropping import crop_hand_data
 your_path = "/Users/bobo/Downloads/rock-paper-scissors-master/datasets/final"
 database = []
 chars = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7']
-keys = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 
+# we can process the databse in this way.
 for c in chars:
     for path in os.listdir(f'{your_path}/{c}'):
         if path == '.DS_Store':
@@ -20,17 +20,19 @@ for c in chars:
             if img_path == '.DS_Store':
                 continue
             image = cv2.imread(f'{your_path}/{c}/{path}/{img_path}')
-            database.append((image, keys[int(path[1])])) 
+            database.append((image, int(path[1]))) 
             
-
-
 """c0 - rock
 c1 - paper
 c2 - scissors"""
 total_images = len(database)
 
+print("database length: ", end="")
+print(len(database))
 database_2, labels = crop_hand_data(database=database)
 
+print("database 2 shape: ", end="")
+print(database_2.shape)
 random.shuffle(database_2)  #generate two separate training and testing lists
 train_split = 0.8
 train_joints = []
@@ -39,7 +41,7 @@ test_joints = []
 test_labels = []
 
 for i, joints in enumerate(database_2):
-    if i > train_split*len(database_2):
+    if i < train_split*len(database_2):
         train_joints.append(joints)
         train_labels.append(labels[i])
     else:
