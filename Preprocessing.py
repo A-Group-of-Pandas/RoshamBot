@@ -6,6 +6,7 @@ import cv2
 import random
 import numpy as np
 from hand_cropping import crop_hand_data
+import matplotlib.pyplot as plt
 
 your_path = "/Users/bobo/Downloads/rock-paper-scissors-master/datasets/final"
 database = []
@@ -28,26 +29,37 @@ c2 - scissors"""
 total_images = len(database)
 
 print("database length: ", end="")
-print(len(database))
-database_2, labels = crop_hand_data(database=database)
 
-print("database 2 shape: ", end="")
-print(database_2.shape)
-random.shuffle(database_2)  #generate two separate training and testing lists
+database_2, labels, images = crop_hand_data(database=database)
+zipped = list(zip(database_2, labels, images))
+
+# print("database 2 shape: ", end="")
+# print(database_2.shape)
+random.shuffle(zipped)  #generate two separate training and testing lists
+database_2, labels, images = zip(*zipped)
 train_split = 0.8
 train_joints = []
 train_labels = []
 test_joints = []
 test_labels = []
 
+keys = ["rock", 'paper', 'scissors']
+counter = [0]*3
 for i, joints in enumerate(database_2):
     if i < train_split*len(database_2):
+        # if i % 100 == 0:
+        #     plt.imshow(images[i])
+        #     plt.show()
+        #     print(keys[labels[i]])
         train_joints.append(joints)
         train_labels.append(labels[i])
+        counter[labels[i]]+=1
     else:
         test_joints.append(joints)
         test_labels.append(labels[i])
+        counter[labels[i]]+=1
 
+print(counter)
 save_path = "/Users/bobo/Downloads/CogWorks/RoshamBot/data"
 np.save(f'{save_path}/train_joints', train_joints)
 np.save(f'{save_path}/train_labels', train_labels)
