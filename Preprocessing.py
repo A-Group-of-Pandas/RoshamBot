@@ -1,6 +1,5 @@
 # loading the training/validation data
-import zipfile
-import wget
+
 import os
 import cv2
 import random
@@ -8,7 +7,7 @@ import numpy as np
 from hand_cropping import crop_hand_data
 import matplotlib.pyplot as plt
 
-your_path = "/Users/bobo/Downloads/rock-paper-scissors-master/datasets/final"
+your_path = "data"
 database = []
 chars = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7']
 
@@ -59,8 +58,15 @@ for i, joints in enumerate(database_2):
         test_labels.append(labels[i])
         counter[labels[i]]+=1
 
+idx = [np.random.randint(0,len(train_labels)) for i in range(15)]
+for i in idx:
+    print(train_joints[i].shape)
+    plt.scatter(train_joints[i][:,0],train_joints[i][:,1])
+    plt.show()
+    print(train_labels[i])
+
 print(counter)
-save_path = "/Users/bobo/Downloads/CogWorks/RoshamBot/data"
+save_path = "data"
 np.save(f'{save_path}/train_joints', train_joints)
 np.save(f'{save_path}/train_labels', train_labels)
 np.save(f'{save_path}/test_joints', test_joints)

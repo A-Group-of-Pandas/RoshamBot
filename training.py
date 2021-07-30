@@ -4,7 +4,7 @@ import numpy as np
 from data_processing import read_batch
 from data_processing import data_augmentation
 from data_processing import normalize_joints
-from model import RecogJoint
+from Model import RecogJoint
 from torch.utils.tensorboard import SummaryWriter
 
 loss_fn = nn.CrossEntropyLoss()
@@ -78,10 +78,10 @@ def eval(model, test_gen, epoch):
         # saves the model params whenever the loss goes below minLoss
     #torch.save(model.state_dict(), 'rps_recogn_joint')
 
-epochs = 5000
+epochs = 500
 batch_size = 64
 model = RecogJoint().to('cpu')
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 train(model, optimizer, batch_size, epochs)
 
 

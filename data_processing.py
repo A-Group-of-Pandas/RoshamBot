@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 #DATA PROCESSING
-def read_data(data_name : str, label_name : str, path:str = "/Users/bobo/Downloads/CogWorks/RoshamBot/data"):
+def read_data(data_name : str, label_name : str, path:str = "data"):
     # reads in data from the dataset
     # load the data and the labels.
     data = np.load(f'{path}/{data_name}.npy')
