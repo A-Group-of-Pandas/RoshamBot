@@ -1,5 +1,7 @@
 import numpy as np
 import cv2
+from Model import RecogJoint
+import torch
 
 agent_env = [0, 1, 2]
 options = ['rock', 'paper', 'scissors']
@@ -7,7 +9,14 @@ options = ['rock', 'paper', 'scissors']
 def random_agent(env=agent_env):
     return np.random.choice(env)
 
-
+def get_opp_choice(image):
+    model = RecogJoint()
+    model.load_state_dict(torch.load('recogn_joint',map_location=torch.device('cpu')))
+    model.eval()
+    image = 0 # whatever image is taken from the pygame capture
+    pred = model(image)
+    keys = ["rock", "paper", "scissors"]
+    return keys[pred]
     
 opp_choice = str(input('rock, paper, or scissors: ').lower())
 agent_choice = random_agent()
@@ -25,6 +34,6 @@ def winner(options, agt_choice, opp_choice):
     else:
         return f'agent picked {options[agt_choice]}, and lost'
     
-winner(options, random_agent, get_opp_choice)
+winner(options, random_agent, get_opp_choice(image))
 #print(winner(options, agent_choice, opp_choice))
 
