@@ -1,5 +1,6 @@
 import pygame
 import sys
+from cpu_opponent import *
 pygame.init()
 pygame.font.init() 
 display_width = 800
@@ -90,6 +91,11 @@ def game_loop():
         button("Go Back", 600, 525, 100, 50, hot_pink, light_pink, action=game_intro)
         pygame.display.update()
 
+def best_of_3():
+    user_score = 0
+    cpu_score = 0 
+    for x in range(3):
+        
 
 def quit_game():
     pygame.quit()
