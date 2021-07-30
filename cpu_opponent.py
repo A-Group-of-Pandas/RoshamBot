@@ -7,8 +7,7 @@ options = ['rock', 'paper', 'scissors']
 def random_agent(env=agent_env):
     return np.random.choice(env)
 
-def get_opp_choice():
-    pass
+
     
 opp_choice = str(input('rock, paper, or scissors: ').lower())
 agent_choice = random_agent()

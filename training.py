@@ -74,9 +74,9 @@ def eval(model, test_gen, epoch):
     print(f'eval {epoch}, loss: {loss}, acc: {acc}')
     if loss < minLoss:
         minLoss = loss
-        torch.save(model.state_dict(), 'rps_recogn_joint')
+        torch.save(model.state_dict(), 'recogn_joint')
         # saves the model params whenever the loss goes below minLoss
-    #torch.save(model.state_dict(), 'rps_recogn_joint')
+    torch.save(model.state_dict(), 'recogn_joint')
 
 epochs = 500
 batch_size = 64
