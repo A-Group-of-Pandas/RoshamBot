@@ -43,7 +43,7 @@ def read_batch(batch_size : int = 32, train : bool = True, joints : bool = True)
 # DATA AUGMENTATION
 
 def normalize_joints(total_x):
-    total_x = total_x - total_x[:,:1,:]
+    total_x = total_x - total_x[:, :, :1,:]
     # factor = np.mean(np.linalg.norm(total_x-total_x[:,0:1,:],axis=-1,keepdims=True),axis=-2,keepdims=True)
     # if (factor != 0).all():
     #     total_x /= factor

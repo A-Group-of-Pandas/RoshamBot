@@ -49,7 +49,7 @@ def game_intro():
     intro = True
     while intro:
         for event in pygame.event.get():
-            print(event)
+            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -71,9 +71,17 @@ def game_intro():
 
 def game_loop():
     main_game = True
+    count = 0
     while main_game:
         for event in pygame.event.get():
-            print(event)
+            #print(event)
+            if count < 1:
+                opp_choice = get_opp_choice()
+                agent_choice = random_agent()
+                print("You picked:", options[opp_choice])
+                print("The agent picked:", options[agent_choice])
+                print(winner(options, agent_choice, opp_choice))
+                count += 1
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -94,7 +102,7 @@ def game_loop():
 def best_of_3():
     user_score = 0
     cpu_score = 0 
-    for x in range(3):
+    # for x in range(3):
         
 
 def quit_game():
@@ -105,7 +113,7 @@ def instructions():
     main_game = True
     while main_game:
         for event in pygame.event.get():
-            print(event)
+            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -115,6 +123,8 @@ def instructions():
         
         smallText = pygame.font.SysFont("freesansbold.ttf",26)
         largeText = pygame.font.Font('freesansbold.ttf', 50)
+
+        image = pygame.image.load(r'rockpaperscissors.png')
 
         TextSurf, TextRect = text_objects("Instructions:", largeText)
         TextRect.center = ((display_width/2),(display_height-525))
