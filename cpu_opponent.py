@@ -23,11 +23,27 @@ def winner(options, agt_choice, opp_choice):
     #print(options[agt_choice], agt_choice, opp_choice)
 
     if winner == 0:
-        return 'It was a tie!'
+        return 'It was a tie!', 0
     elif winner > 0:
-        return f'Agent picked {options[agt_choice]}, and won!'
+        return f'Agent picked {options[agt_choice]}, and won!', 1
     else:
-        return f'Agent picked {options[agt_choice]}, and lost'
+        return f'Agent picked {options[agt_choice]}, and lost', 2
+    
+def bestThree():
+    agent_score = 0
+    score = 0
+    for i in range(3):
+        agent_choice = random_agent()
+        opp_choice = get_opp_choice()
+        str, num = winner(options, agent_choice, opp_choice)
+        if num == 1:
+            agent_score += 1
+        if num == 2:
+            score += 1
+        if agent_score > 1:
+            return "Agent won!"
+        if score > 1:
+            return "You won!"
     
 #winner(options, agent_choice, opp_choice)
 #print(winner(options, agent_choice, opp_choice))
