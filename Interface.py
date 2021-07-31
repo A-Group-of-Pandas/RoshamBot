@@ -76,11 +76,20 @@ def game_loop():
         for event in pygame.event.get():
             #print(event)
             if count < 1:
+                agent_env = [0, 1, 2]
+                options = ['rock', 'paper', 'scissors']
                 opp_choice = get_opp_choice()
-                agent_choice = random_agent()
+                agent_choice = random_agent(env=agent_env)
+                win = winner(options, agent_choice, opp_choice)
                 print("You picked:", options[opp_choice])
                 print("The agent picked:", options[agent_choice])
-                print(winner(options, agent_choice, opp_choice))
+                print(win)
+                TextSurf, TextRect = text_objects("You picked: " + options[opp_choice] + "// Agent picked: " + options[agent_choice], smallText)
+                TextRect.center = ((display_width/2),(display_height-225))
+                gameDisplay.blit(TextSurf, TextRect)
+                TextSurf, TextRect = text_objects(win, smallText)
+                TextRect.center = ((display_width/2),(display_height-200))
+                gameDisplay.blit(TextSurf, TextRect)
                 count += 1
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -125,6 +134,7 @@ def instructions():
         largeText = pygame.font.Font('freesansbold.ttf', 50)
 
         image = pygame.image.load(r'rockpaperscissors.png')
+        gameDisplay.blit(image, (240, display_height-500))
 
         TextSurf, TextRect = text_objects("Instructions:", largeText)
         TextRect.center = ((display_width/2),(display_height-525))
