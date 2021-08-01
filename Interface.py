@@ -69,56 +69,86 @@ def game_intro():
         pygame.display.update()
         clock.tick(60)
 
+global cpu_score
+cpu_score = 0
+global user_score
+user_score = 0
+
 def game_loop():
     main_game = True
+    # defining all the variables
     count = 0
+    agent_env = [0, 1, 2]
+    options = ['rock', 'paper', 'scissors', 'none']
+    opp_choice = 3
+    agent_choice = 3
+    win = ""
+    num = 0
+    #==================================
+    smallText = pygame.font.SysFont("comicsansms",20)
     while main_game:
         for event in pygame.event.get():
             #print(event)
             if count < 1:
-                agent_env = [0, 1, 2]
-                options = ['rock', 'paper', 'scissors']
                 opp_choice = get_opp_choice()
                 agent_choice = random_agent(env=agent_env)
-                win = winner(options, agent_choice, opp_choice)
+                win, num = winner(options, agent_choice, opp_choice)
                 print("You picked:", options[opp_choice])
                 print("The agent picked:", options[agent_choice])
                 print(win)
-                TextSurf, TextRect = text_objects("You picked: " + options[opp_choice] + "// Agent picked: " + options[agent_choice], smallText)
-                TextRect.center = ((display_width/2),(display_height-225))
-                gameDisplay.blit(TextSurf, TextRect)
-                TextSurf, TextRect = text_objects(win, smallText)
-                TextRect.center = ((display_width/2),(display_height-200))
-                gameDisplay.blit(TextSurf, TextRect)
                 count += 1
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-                
+        
         gameDisplay.fill(light_green)
+
+        TextSurf, TextRect = text_objects("You picked: " + str(options[opp_choice]) + " // Agent picked: " + str(options[agent_choice]), smallText)
+        TextRect.center = ((display_width/2),(display_height-225))
+        gameDisplay.blit(TextSurf, TextRect)
+
+        TextSurf, TextRect = text_objects(win, smallText)
+        TextRect.center = ((display_width/2),(display_height-200))
+        gameDisplay.blit(TextSurf, TextRect)
+
+        if num == 1:
+            global cpu_score
+            cpu_score +=1
+            num = 0
+        if num == 2:
+            global user_score
+            user_score +=1
+            num = 0
+
+        TextSurf, TextRect = text_objects(f"Your score: {user_score}, Agent score: {cpu_score}", smallText)
+        TextRect.center = ((display_width/2),(display_height-175))
+        gameDisplay.blit(TextSurf, TextRect)
+
         largeText = pygame.font.Font('freesansbold.ttf', 50)
         smallText = pygame.font.SysFont("freesansbold.ttf",26)
         TextSurf, TextRect = text_objects("Get ready!", largeText)
         TextRect.center = ((display_width/2),(display_height-550))
         gameDisplay.blit(TextSurf, TextRect)
         TextSurf, TextRect = text_objects("Hold up your choice in front of the webcam, which will come on this screen.", smallText)
-        TextRect.center = ((display_width/2),(display_height-150))
+        TextRect.center = ((display_width/2),(display_height-300))
         gameDisplay.blit(TextSurf, TextRect)
+        dark_blue = (51, 153, 255)
         button('Quit', 450, 525, 100, 50, warm_red, light_red, action=quit_game)
         button("Go Back", 600, 525, 100, 50, hot_pink, light_pink, action=game_intro)
+        button("Play Again?", 300, 525, 150, 50, dark_blue, coral, action=game_loop)
         pygame.display.update()
 
 def best_of_3():
     user_score = 0
     cpu_score = 0 
     # for x in range(3):
-        
 
 def quit_game():
     pygame.quit()
 
 def instructions():    
     #displays the color and text.
+    smallText = pygame.font.SysFont("comicsansms",20)
     main_game = True
     while main_game:
         for event in pygame.event.get():
@@ -188,7 +218,7 @@ def instructions():
         #         TextRect.center = ((display_width/2),(display_height-i))
         #         gameDisplay.blit(TextSurf, TextRect)
         #         pygame.display.update()
-        
+
 
 crashed = False
 while not crashed:
