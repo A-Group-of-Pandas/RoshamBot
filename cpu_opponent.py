@@ -21,8 +21,14 @@ def winner(options, agt_choice, opp_choice):
     winner = agt_choice - opp_choice
     # print(agent_choice, opp_choice)
     #print(options[agt_choice], agt_choice, opp_choice)
-
-    if winner == 0:
+    """0 rock
+    1 paper
+    2 scissors"""
+    if agt_choice == 0 and opp_choice == 2:
+        return f'Agent picked {options[agt_choice]}, and won!', 1
+    elif agt_choice == 2 and opp_choice == 0:
+        return f'Agent picked {options[agt_choice]}, and lost!', 2
+    elif winner == 0:
         return 'It was a tie!', 0
     elif winner > 0:
         return f'Agent picked {options[agt_choice]}, and won!', 1

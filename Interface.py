@@ -135,7 +135,7 @@ def game_loop():
         dark_blue = (51, 153, 255)
         button('Quit', 450, 525, 100, 50, warm_red, light_red, action=quit_game)
         button("Go Back", 600, 525, 100, 50, hot_pink, light_pink, action=game_intro)
-        button("Play Again?", 300, 525, 150, 50, dark_blue, coral, action=game_loop)
+        button("Play Again?", 250, 525, 150, 50, dark_blue, coral, action=game_loop)
         pygame.display.update()
 
 def best_of_3():
